@@ -1,14 +1,14 @@
-import { useState } from "react";
-import { Link } from "@inertiajs/react";
+import { Link } from '@inertiajs/react';
+import { useState } from 'react';
 import {
     SidebarGroup,
     SidebarGroupLabel,
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
-} from "@/components/ui/sidebar";
-import { useCurrentUrl } from "@/hooks/use-current-url";
-import type { NavItem } from "@/types";
+} from '@/components/ui/sidebar';
+import { useCurrentUrl } from '@/hooks/use-current-url';
+import type { NavItem } from '@/types';
 
 export function NavMain({ items = [] }: { items: NavItem[] }) {
     const { isCurrentUrl } = useCurrentUrl();
@@ -24,20 +24,28 @@ export function NavMain({ items = [] }: { items: NavItem[] }) {
                         {/* Fő menüpont */}
                         <SidebarMenuButton
                             asChild={!item.children}
-                            isActive={item.href ? isCurrentUrl(item.href) : false}
+                            isActive={
+                                item.href ? isCurrentUrl(item.href) : false
+                            }
                             onClick={() =>
                                 item.children
-                                    ? setOpen(open === item.title ? null : item.title)
+                                    ? setOpen(
+                                          open === item.title
+                                              ? null
+                                              : item.title,
+                                      )
                                     : null
                             }
                         >
                             {item.children ? (
-                                <button className="flex items-center justify-between w-full">
+                                <button className="flex w-full items-center justify-between">
                                     <span className="flex items-center gap-2">
                                         {item.icon && <item.icon />}
                                         {item.title}
                                     </span>
-                                    <span>{open === item.title ? "−" : "+"}</span>
+                                    <span>
+                                        {open === item.title ? '−' : '+'}
+                                    </span>
                                 </button>
                             ) : (
                                 <Link href={item.href!} prefetch>
@@ -49,12 +57,12 @@ export function NavMain({ items = [] }: { items: NavItem[] }) {
 
                         {/* Almenü */}
                         {item.children && open === item.title && (
-                            <div className="ml-6 mt-1 space-y-1">
+                            <div className="mt-1 ml-6 space-y-1">
                                 {item.children.map((child) => (
                                     <Link
                                         key={child.title}
                                         href={child.href}
-                                        className="block px-3 py-1 text-sm hover:bg-gray-800 rounded"
+                                        className="block rounded px-3 py-1 text-sm hover:bg-gray-800"
                                     >
                                         {child.title}
                                     </Link>
